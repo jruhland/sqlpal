@@ -3,8 +3,8 @@ import { db } from "../db.server";
 import type { SchemaQueryResults } from "./utils";
 
 export abstract class Driver {
+  protected isConnected = false;
   constructor(private connectionId: string) {}
-
   abstract getConnection(): Promise<unknown>;
   abstract getSchemaInformation(): Promise<SchemaQueryResults>;
   abstract executeQuery(statement: string): Promise<Record<string, unknown>[]>;
@@ -12,7 +12,7 @@ export abstract class Driver {
 
   async query(
     statement: string,
-  ): Promise<{ rows: Record<string, unknown>[] } | { error: string }> {
+  ): Promise<{ rows: Record<string, unknown>[] } | { statementError: string }> {
     await db.insert(recentQueries).values({
       connectionId: this.connectionId,
       queryText: statement,
@@ -23,10 +23,10 @@ export abstract class Driver {
     } catch (error) {
       if (error instanceof Error) {
         return {
-          error: error.message,
+          statementError: error.message,
         };
       }
-      return { error: JSON.stringify(error) };
+      return { statementError: JSON.stringify(error) };
     }
   }
 }

@@ -31,7 +31,6 @@ const SCHEMA_SQL = `
 
 export class PostgresDriver extends Driver {
   private pool: pg.Pool;
-  private connected = false;
 
   constructor(
     connectionId: string,
@@ -48,9 +47,9 @@ export class PostgresDriver extends Driver {
   }
 
   async getConnection() {
-    if (!this.connected) {
+    if (!this.isConnected) {
       await this.pool.connect();
-      this.connected = true;
+      this.isConnected = true;
     }
 
     return this.pool;
@@ -71,6 +70,6 @@ export class PostgresDriver extends Driver {
 
   async disconnect() {
     await this.pool.end();
-    this.connected = false;
+    this.isConnected = false;
   }
 }

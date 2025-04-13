@@ -120,7 +120,7 @@ export function ResultsTable({ rows }: ResultsDrawerProps) {
           </Button>
         </CsvDownloader>
       </div>
-      <div className="border overflow-x-auto">
+      <div className="border overflow-scroll">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

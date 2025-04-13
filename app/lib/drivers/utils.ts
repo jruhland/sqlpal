@@ -1,11 +1,11 @@
 export type Row = {
-  table_schema: string;
-  schema_name: string;
-  schema_description: string;
+  table_schema?: string;
+  schema_name?: string;
+  schema_description?: string;
   table_name: string;
-  table_description: string;
+  table_description?: string;
   column_name: string;
-  column_description: string;
+  column_description?: string;
   data_type: string;
 };
 

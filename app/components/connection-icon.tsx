@@ -16,17 +16,17 @@ export function ConnectionIcon({
 }) {
   switch (driver) {
     case "postgres":
-      return <PostgresIcon className={cn(className)} />;
+      return <PostgresIcon className={cn("dark:fill-white", className)} />;
     case "mysql":
-      return <MySQLIcon className={cn(className)} />;
+      return <MySQLIcon className={cn("dark:fill-white", className)} />;
     case "sqlite":
-      return <SQLiteIcon className={cn(className)} />;
+      return <SQLiteIcon className={cn("dark:fill-white", className)} />;
     case "cassandra":
-      return <CassandraIcon className={cn(className)} />;
+      return <CassandraIcon className={cn("dark:fill-white", className)} />;
     case "bigquery":
-      return <BigQueryIcon className={cn(className)} />;
+      return <BigQueryIcon className={cn("dark:fill-white", className)} />;
     case "clickhouse":
-      return <ClickhouseIcon className={cn(className)} />;
+      return <ClickhouseIcon className={cn("dark:fill-white", className)} />;
     default:
       throw new Error(`Unknown driver: ${driver}`);
   }

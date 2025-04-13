@@ -30,6 +30,7 @@ export const mysqlConnectionSchema = sqlSchema.extend({
 export const sqliteConnectionSchema = z.object({
   driver: z.literal("sqlite"),
   filename: z.string(),
+  readonly: z.boolean().optional().default(false),
 });
 
 export const cassandraConnectionSchema = z.object({

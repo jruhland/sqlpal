@@ -104,9 +104,9 @@ export default function HomePage({ loaderData }: Route.ComponentProps) {
                 {"rows" in fetcher.data && (
                   <ResultsTable rows={fetcher.data.rows} />
                 )}
-                {"error" in fetcher.data && (
+                {"statementError" in fetcher.data && (
                   <div className="w-full text-red-500">
-                    {fetcher.data.error}
+                    {fetcher.data.statementError}
                   </div>
                 )}
               </ResizablePanel>

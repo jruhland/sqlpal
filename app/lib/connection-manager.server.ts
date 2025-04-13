@@ -2,6 +2,7 @@ import type { z } from "zod";
 import type { Driver } from "~/lib/drivers/driver.server";
 import { PostgresDriver } from "~/lib/drivers/postgres.server";
 import type { connectionSchemas } from "~/modules/connections";
+import { SQLiteDriver } from "./drivers/sqlite.server";
 
 export type ConnectionConfig = z.infer<typeof connectionSchemas>;
 
@@ -32,11 +33,11 @@ class ConnectionManager {
       //   return pool;
       // }
 
-      // case "sqlite": {
-      //   const db = new Database(config.filename);
-      //   this.connections[id] = db;
-      //   return db;
-      // }
+      case "sqlite": {
+        const db = new SQLiteDriver(id, config);
+        this.connections[id] = db;
+        return db;
+      }
 
       // case "cassandra": {
       //   const client = new Client({
