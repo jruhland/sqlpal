@@ -6,6 +6,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  data,
   isRouteErrorResponse,
   useLoaderData,
 } from "react-router";
@@ -32,24 +33,6 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
-export function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        {children}
-        <ScrollRestoration />
-        <Scripts />
-      </body>
-    </html>
-  );
-}
-
 export async function loader({ request }: LoaderFunctionArgs) {
   const { getTheme } = await themeSessionResolver(request);
   return {
@@ -57,12 +40,36 @@ export async function loader({ request }: LoaderFunctionArgs) {
   };
 }
 
-export default function App({ loaderData }: Route.ComponentProps) {
-  const { theme } = loaderData;
+export function App() {
+  const data = useLoaderData<typeof loader>();
+  const [theme] = useTheme();
 
   return (
-    <ThemeProvider specifiedTheme={theme} themeAction="/action/set-theme">
-      <Outlet />
+    <html lang="en" className={clsx(theme)}>
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <Meta />
+        <PreventFlashOnWrongTheme ssrTheme={Boolean(data.theme)} />
+        <Links />
+      </head>
+      <body>
+        <Outlet />
+        <ScrollRestoration />
+        <Scripts />
+      </body>
+    </html>
+  );
+}
+
+export default function AppWithProviders({ loaderData }: Route.ComponentProps) {
+  return (
+    <ThemeProvider
+      specifiedTheme={loaderData.theme}
+      themeAction="/action/set-theme"
+      disableTransitionOnThemeChange={true}
+    >
+      <App />
     </ThemeProvider>
   );
 }

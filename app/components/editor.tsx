@@ -8,6 +8,7 @@ import {
 import { type EditorView, keymap } from "@codemirror/view";
 import CodeMirror from "@uiw/react-codemirror";
 import { useMemo } from "react";
+import { Theme, useTheme } from "remix-themes";
 import { ClientOnly } from "remix-utils/client-only";
 import type { connections } from "~/db/schema.server";
 import type { SchemaQueryResults } from "~/lib/drivers/utils";
@@ -33,6 +34,8 @@ const mapColumnsToCompletions = (
   }));
 
 export function Editor({ connection, onSubmit, schemas }: EditorProps) {
+  const [theme] = useTheme();
+
   const keyMapping = useMemo(
     () => [
       {
@@ -82,6 +85,7 @@ export function Editor({ connection, onSubmit, schemas }: EditorProps) {
     <ClientOnly>
       {() => (
         <CodeMirror
+          theme={theme === Theme.DARK ? "dark" : "light"}
           value={localStorage.getItem("editorValue") ?? "-- INSERT SQL HERE"}
           extensions={[
             keymap.of(keyMapping),
