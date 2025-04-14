@@ -1,3 +1,4 @@
+import { File } from "lucide-react";
 import { CassandraIcon } from "~/components/icons/cassandra";
 import { MySQLIcon } from "~/components/icons/mysql";
 import { PostgresIcon } from "~/components/icons/postgres";
@@ -14,20 +15,29 @@ export function ConnectionIcon({
   className?: string;
   driver: (typeof drivers.enumValues)[number];
 }) {
+  let Icon: React.ElementType | null = null;
   switch (driver) {
     case "postgres":
-      return <PostgresIcon className={cn("dark:fill-white", className)} />;
+      Icon = PostgresIcon;
+      break;
     case "mysql":
-      return <MySQLIcon className={cn("dark:fill-white", className)} />;
+      Icon = MySQLIcon;
+      break;
     case "sqlite":
-      return <SQLiteIcon className={cn("dark:fill-white", className)} />;
+      Icon = SQLiteIcon;
+      break;
     case "cassandra":
-      return <CassandraIcon className={cn("dark:fill-white", className)} />;
+      Icon = CassandraIcon;
+      break;
     case "bigquery":
-      return <BigQueryIcon className={cn("dark:fill-white", className)} />;
+      Icon = BigQueryIcon;
+      break;
     case "clickhouse":
-      return <ClickhouseIcon className={cn("dark:fill-white", className)} />;
+      Icon = ClickhouseIcon;
+      break;
     default:
-      throw new Error(`Unknown driver: ${driver}`);
+      Icon = File;
   }
+
+  return <Icon className={cn("dark:fill-white", className)} />;
 }

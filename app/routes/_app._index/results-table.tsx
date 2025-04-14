@@ -46,17 +46,16 @@ export function ResultsTable({ rows }: ResultsDrawerProps) {
         accessorKey: key,
         header: ({ column }) => {
           return (
-            <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                onClick={() =>
-                  column.toggleSorting(column.getIsSorted() === "asc")
-                }
-              >
-                {key}
-                <ArrowUpDown className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
+            <Button
+              className="w-full justify-between cursor-pointer"
+              variant="ghost"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              {key}
+              <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
           );
         },
       })),
@@ -83,7 +82,7 @@ export function ResultsTable({ rows }: ResultsDrawerProps) {
   });
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full max-w-full overflow-x-scroll!">
       <div className="flex py-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -120,8 +119,8 @@ export function ResultsTable({ rows }: ResultsDrawerProps) {
           </Button>
         </CsvDownloader>
       </div>
-      <div className="border overflow-scroll">
-        <Table>
+      <div className="border max-w-full">
+        <Table className="overflow-hidden">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>

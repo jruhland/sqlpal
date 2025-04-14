@@ -8,6 +8,13 @@ import { db } from "~/lib/db.server";
 export const auth = betterAuth({
   baseURL: config.BASE_URL,
   secret: config.ENCRYPTION_SECRET,
+  cookie: {
+    options: {
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      sameSite: "lax",
+    },
+  },
   database: drizzleAdapter(db, {
     provider: "pg",
     schema: {

@@ -42,7 +42,7 @@ export function Editor({ connection, onSubmit, schemas }: EditorProps) {
         key: "Shift-Mod-Enter",
         run: ({ state, ...rest }: EditorView) => {
           const statement = state.doc.toString();
-          localStorage.setItem("editorValue", statement);
+          localStorage.setItem(connection.id, statement);
           onSubmit({
             connectionId: connection.id,
             statement,
@@ -86,7 +86,7 @@ export function Editor({ connection, onSubmit, schemas }: EditorProps) {
       {() => (
         <CodeMirror
           theme={theme === Theme.DARK ? "dark" : "light"}
-          value={localStorage.getItem("editorValue") ?? "-- INSERT SQL HERE"}
+          value={localStorage.getItem(connection.id) ?? "-- INSERT SQL HERE"}
           extensions={[
             keymap.of(keyMapping),
             sql({
